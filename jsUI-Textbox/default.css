@@ -1,0 +1,60 @@
+.TextBoxInput
+{
+	z-index: 2;
+	position: absolute;
+	background-color: transparent;
+	border: 1px groove;
+	border-top: 1px solid threedshadow;
+	border-left: 1px solid threedshadow;
+	border-right: 1px solid threedshadow;
+	border-bottom: 1px solid threedshadow;
+	height: 20px;
+	font-family: Courier New;
+	font-size: 11px;
+	font-weight: 500;
+	width: 150px;
+}
+.TextBoxInputDisabled
+{
+	z-index: 2;
+	position: absolute;
+	background-color: transparent;
+	border: 1px solid #E0DFE3;
+	height: 20px;
+	font-family: Arial;
+	font-size: 11px;
+	font-weight: 500;
+	width: 150px;
+}
+.TextBoxCaption
+{
+	z-index: 1;
+	position: absolute;
+	text-align: right;
+	font: bolder 7pt Arial;
+	font-variant: small-caps;
+	font-style:italic;
+	background-color: white;
+	color: #B5B5B5;
+	letter-spacing: 1px;
+	padding-right: 1px;
+	height: 20px;
+	padding-top: 1px;
+	width: 150px;
+}
+.TextBoxCaptionDisabled
+{
+	z-index: 1;
+	position: absolute;
+	text-align: right;
+	font: bolder 7pt Arial;
+	font-variant: small-caps;
+	font-style:italic;
+	background-color: transparent;
+	color: #B5B5B5;
+	letter-spacing: 1px;
+	padding-right: 1px;
+	height: 20px;
+	padding-top: 1px;
+	width: 150px;
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsUI-Toolbar</name>
+		<code>
+			<c>var mytoolbar = new Object();</c>
+			<c>mytoolbar = toolbarNew("mytoolbar", "default", document.getElementById("toolbarCell"), null);</c>
+			<c>mytoolbar.itemClick = doClick;</c>
+			<c>mytoolbar.createButton("button1", "First Button", "../images/icon.jpg");</c>
+		</code>
+		<remarks>The toolbar is a navigation control, based on those frequently found in Windows or the MacOS. It is compatible with Internet Explorer 5.0 and FireFox 1.0 or better.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-Toolbar/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="toolbarParent">
+			<summary>The DOM object to which the toolbar is attached. Frequently a DIV or TD.</summary>
+			<code>alert (mytoolbar.toolbarParent.id);</code>
+			<remarks>DOM Object. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="rootDir">
+			<summary>Gets or sets the string value representing the path to the root of the jsObjects directory. Used for calculating style and graphics file paths. Initially set during instantiation.</summary>
+			<code>mytoolbar.rootDir = "http://localhost/libraries/jsobjects";</code>
+			<default>http://&lt;server&gt;/jsObjects</default>
+			<remarks>String. This value only needs to be set if jsObjects is installed in a custom location.</remarks>
+		</member>
+	</Property>
+	<Method>
+		<member name="toolbarNew (string, string, object, string)">
+			<summary>Instantiates the toolbar through assignment into a Javascript object.</summary>
+			<param name="toolbarName">The name for the new toolbar. Must match the name of an empty Javascript object to contain the toolbar.</param>
+			<param name="skinName">The name of the CSS (excluding the extension and path) file to use for the toolbar. If left blank, "default" will be used.</param>
+			<param name="toolbarParent">The DOM object that the toolbar is to be attached to. If no value is passed, the toolbar will be appended to document.body</param>
+			<param name="rootDir">The path to the root of the jsObjects directory. If left blank, the default path will be used.</param>
+			<code>
+				<c>var mytoolbar = new Object();</c>
+				<c>mytoolbar = toolbarNew("mytoolbar", "default", document.getElementById("toolbarDiv"), "../jsobjects");</c>
+			</code>
+			<returns>The toolbar object.</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-Toolbar members.</remarks>
+		</member>
+		<member name="createButton (string, string, string)">
+			<summary>Creats a button on the toolbar.</summary>
+			<param name="taskID">Required. A unique string to be used as the DOM ID for the new button.</param>
+			<param name="taskText">Required. The ALT text (or tooltip) to show for the button when the mouse pointer hovers over it.</param>
+			<param name="taskIcon">Required. The path to the image file to use as an icon for the button. Images should be 16x16 pixels. GIF files with transparency usually look best.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="createSeperator ()">
+			<summary>Creates a seperator on the toolbar to be used for grouping buttons.</summary>
+			<returns>Nothing</returns>
+		</member>
+		<member name="createListItem (string, string, string)">
+			<summary>Creates a list item that can be added to a list box on the toolbar using the createList function.</summary>
+			<param name="listItemID">Required. A unique string to be used as the DOM ID for the new list item.</param>
+			<param name="listItemText">Required. The text that the users sees in the list.</param>
+			<param name="listItemValue">Required. The value of the list item.</param>
+			<code>
+				<c>var listArray = new Array();</c>
+				<c>listArray[0] = mytoolbar.createListItem("List1Item1", "First Item in List", "Item1Value");</c>
+			</code>
+			<returns>An list item object that can be added to a toolbar list.</returns>
+		</member>
+		<member name="createList (string, string, array, string)">
+			<summary>Creates a list box in the specified folder in the toolbar.</summary>
+			<param name="listID">Required. A unique string to be used as the DOM ID for the new list.</param>
+			<param name="listName">Required. The text that shows in the list box when there are no items selected. Pass an empty string ("") to leave empty.</param>
+			<param name="arrList">Required. An array of objects created by the createListItem method.</param>
+			<param name="listWidth">Optional. The width, in pixels, for the new list box on the toolbar.</param>
+			<returns>Nothing</returns>
+		</member>
+	</Method>
+	<Event>
+		<member name="itemClick">
+			<summary>Fires whenever a button is clicked, passing the ID of target object, so that external code can respond.</summary>
+			<code>
+				mytoolbar.itemClick = <i>handler</i>;
+			</code>
+			<remarks>The handler should accept one string parameter which will contain the ID of the button clicked.</remarks>
+		</member>
+	</Event>
+</doc>

@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>jsDA-wsBind Sample</title>
+    <script language="javascript" src="../jsUI-Global/common.js"></script>
+	<script language="javascript" src="../jsUI-Global/uiCommon.js"></script>
+	<script language="javascript" src="../jsDA-wsBind/component.js"></script>
+    <script>
+    var myws = new Object();
+    function addwsBind()
+    {   
+        myws = wsbindNew("myws", document.getElementById("txtWSPath").value);
+        if (!myws)
+		    alert ("Unable to bind to a remote webservice (the webservice host is different than this page host).\nIf your sure you want to allow this interaction, please make the appropriate security setting changes in your browser.")
+        else
+        {
+            document.getElementById("wsStatusCell").innerHTML = "<b>Connected to: </b>";
+		    document.getElementById("wsStatusCell").innerHTML += "<a href='" + document.getElementById("txtWSPath").value + "?WSDL' target='blank'>" + myws.serviceName + "</a><br>";
+		    document.getElementById("wsStatusCell").innerHTML += "<i>" + myws.documentation + "</i>"; 
+		    
+		    //Activate other examples
+            //document.getElementById("btnAddwsBind").disabled = true;
+            document.getElementById("btnDescribe").disabled = false;
+            document.getElementById("lstWSMethods").disabled = true;
+	        document.getElementById("btnCallWS").disabled = true;
+		}
+    }
+    
+    function describeWS()
+    {
+        document.getElementById("lstWSMethods").innerHTML="";
+        var wsfuncs = myws.describe();
+	    wsfuncs = wsfuncs.split("\n");
+	    for (var f=0;f<wsfuncs.length-1;f++)
+	    {
+	        var newOpt = document.createElement("option");
+	        newOpt.value = wsfuncs[f];
+	        newOpt.text = wsfuncs[f];
+	        if (browser == "MOZ")
+	            document.getElementById("lstWSMethods").appendChild(newOpt);
+	        else
+	            document.getElementById("lstWSMethods").add(newOpt);
+	    }
+	    document.getElementById("lstWSMethods").disabled = false;
+	    document.getElementById("btnCallWS").disabled = false;
+	    document.getElementById("btnDescribe").disabled = true;
+	    updateDescription();
+    }
+    
+    function updateDescription()
+    {
+        document.getElementById("wsMethodName").innerText = document.getElementById("lstWSMethods").options[document.getElementById("lstWSMethods").selectedIndex].value;
+    }
+    
+	function doWSfunc()
+	{
+		var details = document.getElementById("lstWSMethods").options[document.getElementById("lstWSMethods").selectedIndex].value;
+		var cmdStr = "";
+		fparts = details.split("(");
+		fname = fparts[0];
+		cmdStr += fname + "(";
+		params = replace(fparts[1], ")", "");
+		params = params.split(",");
+		for (var p=0;p<params.length;p++)
+		{
+		    if (params != "" && params != " " && params != null)
+		    {
+		        param = params[p].split(" ");
+		        type = param[0];
+		        param = param[param.length-1];
+		        var value = prompt ("Please enter a " + type + " value for " + param + ":", "");
+		        if (type == "string")
+			        cmdStr += "\"";
+		        cmdStr += value;
+		        if (type == "string")
+			        cmdStr += "\"";
+		        if (p < params.length-1)
+			        cmdStr += ",";
+			}
+		}
+		cmdStr += ")";
+		eval ("alert ('The webservice said... \\n\\n' + myws." + cmdStr + ")");
+	}
+    </script>
+    <link rel='stylesheet' type='text/css' href='../documentation.css'></link>
+</head>
+<body vlink="#0000ff" link="#0000ff" alink="#0000ff">
+<table width="100%"><tr><td>
+<h3>wsBind Sample</h3>
+</td><td align="right"><a href="documentation.xml">Reference</a></td></tr></table>
+<div class="sample">This sample demonstrates how to create the jsDA-wsBind object and bind it to a webservice.
+<br />&nbsp;
+<div id="wsStatusCell" style="height:25px;border-left:0px solid #C0C0C0;background-color:#fff;"></div><br />
+</div>
+    <br />
+    Webservice Path: <input type="text" id="txtWSPath" value="testService.asmx" style="width:300px"/><br />
+    <input type="button" value="New Binding" onclick="addwsBind()" id="btnAddwsBind"/>
+    <div class="description">
+            Instantiate the jsDA-wsBind Object into an empty, global object and bind it to a WebService using the <i>wsbindNew</i> method.<br />
+            <br /><b>Note:</b> The example webservice on the server requires Microsoft's .NET Framework 2.0 in order for this example to work. You can also try to connect to another public webservice on another server, but your browser's security settings may prevent the connection.
+    </div>
+    
+    <input type="button" value="List Functions" id="btnDescribe" disabled="true" onclick="describeWS()"/>
+    <div class="description">
+            Use the <i>describe</i> method to get information about the available functions in the webservice
+    </div>
+
+    Choose a function on the server to call...<br />
+    <select id="lstWSMethods" disabled="true" onchange="updateDescription()">
+        <option value="none">Choose Function</option>
+    </select>&nbsp;
+    <input type="button" value="Call Server" id="btnCallWS" disabled="true" onclick="doWSfunc()"/>
+    <div class="description">
+            Use the <i><span id="wsMethodName">WebService Function Name</span></i> method, attached to the jsDA-wsBind object, to call the selected server-side function
+    </div>
+    
+    <br />
+    <div class="footer">To view the source code, right-click this page and choose View Source from the shortcut menu that appears.</div>
+    <br />
+    © 2005 Jonathan Wise. Some rights reserved. 
+</body>
+</html>
+
+ 
+ 

@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsUI-Calendar</name>
+		<code>
+			<c>var mycalendar = new Object();</c>
+			<c>mycalendar = calendarNew("mycalendar", "default", document.getElementById("calendarCell"), null);</c>
+			<c>var currentDate = new Date();</c>
+			<c>mycalendar.setDate(currentDate);</c>
+			<c>mycalendar.createEvent = doNewEvent;</c>
+			<c>mycalendar.addEvent("event1", objStartDate, objEndDate, null, "event summary", "blue", "calendar1");</c>
+		</code>
+		<remarks>A calendar control that can be used as read-only, read/write, or as a selection control. It is compatible with Internet Explorer 5.0 and FireFox 1.0 or better.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-Calendar/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="calendarDate">
+			<summary>Gets date the calendar is using as the current, or today's, date. Read only.</summary>
+			<code>alert(mycalendar.calendarDate);</code>
+		</member>
+		<member name="selectedDate">
+			<summary>Gets date of the currently selected day on the calendar. Read only.</summary>
+			<code>alert(mycalendar.selectedDate);</code>
+		</member>
+		<member name="events">
+			<summary>The collection of event objects the calendar has in memory. Read only.</summary>
+			<code>alert(mycalendar.events.length);</code>
+		</member>
+		<member name="calendarParent">
+			<summary>The DOM object to which the calendar is attached. Frequently a DIV or TD.</summary>
+			<code>alert (mycalendar.calendarParent.id);</code>
+			<remarks>DOM Object. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="textChecker">
+			<summary>Gets or sets a pointer to an optional instance of a jsUI-Textbox object. Used to validate input.</summary>
+			<code>mycalendar.textChecker = mytextChecker;</code>
+			<returns>Javascript Pointer. This value only needs to be set if a jsUI-Textbox object is available to the calendar.</returns>
+			<remarks>Providing a jsUI-Textbox for the calendar provides error handling and improves functionality.</remarks>
+		</member>
+		<member name="rootDir">
+			<summary>Gets or sets the string value representing the path to the root of the jsObjects directory. Used for calculating style and graphics file paths. Initially set during instantiation.</summary>
+			<code>mycalendar.rootDir = "http://localhost/libraries/jsobjects";</code>
+			<default>http://&lt;server&gt;/jsObjects</default>
+			<remarks>String. This value only needs to be set if jsObjects is installed in a custom location.</remarks>
+		</member>
+	</Property>
+	<Method>
+		<member name="calendarNew (string, string, object, string)">
+			<summary>Instantiates the calendar through assignment into a Javascript object.</summary>
+			<param name="calendarName">Required. The name for the new calendar. Must match the name of an empty Javascript object to contain the calendar.</param>
+			<param name="skinName">Optional. The name of the CSS (excluding the extension and path) file to use for the calendar. If left blank, "default" will be used.</param>
+			<param name="calendarParent">Optional. The DOM object that the calendar is to be attached to. If no value is passed, the calendar will be appended to document.body</param>
+			<param name="rootDir">Optional. The path to the root of the jsObjects directory. If left blank, the default path will be used.</param>
+			<code>
+				<c>var mycalendar = new Object();</c>
+				<c>mycalendar = calendarNew("mycalendar", "default", document.getElementById("calendarCell"), null);</c>
+			</code>
+			<returns>The calendar object.</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-Calendar members.</remarks>
+		</member>
+		<member name="setDate (date)">
+			<summary>Sets the current date of the calendar. This must be done before the user can interact with the calendar.</summary>
+			<param name="dateObj">Required. A javascript Date object containing the date to use as "today".</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="setStatus(string, string)">
+			<summary>Modifies the status area to provide feedback for, or interaction with, the user.</summary>
+			<param name="type">
+				<para>
+					Required. The type of information to be displayed in the status area. Valid types are:<para/>
+				</para>
+				<para>
+					WORKING - Displays a spinning graphic to indicate the application is processing data, as well as any message passed in the <i>text</i> parameter.
+				</para>
+				<para>
+					DATE - Default state. Displays the calendar's current month and year.<br/>
+				</para>
+				<para>
+					CHANGE - Provides an interface to allow the user to change to a specific month and year.<br/>
+				</para>
+			</param>
+			<param name="text">Optional. The text to display in the status area (if applicable).</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="addEvent(string, date, date, float, string, string, color, calendar)">
+			<summary>Used to add an event to the calendar.</summary>
+			<param name="uid">Required. A unique ID for the new event.</param>
+			<param name="startTime">Required. An object containing the start date and time for the event.</param>
+			<param name="endTime">Optional. An object containing the end date and time for the event.</param>
+			<param name="duration">Optional. The duration, in hours, for the event.</param>
+			<param name="title">Required. The title (tooltip) text for the event.</param>
+			<param name="summary">Optional. The description or name of the event.</param>
+			<param name="color">Optional. The colour the event text should appear in. Defaults to skin value.</param>
+			<param name="calendar">Optional. The name of the calendar the event exists in -- in case multiple calendars are being represented in the same interface.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="removeEvent(string)">
+			<summary>Used to remove all events, or a single specific event from the calendar. Causes a redraw.</summary>
+			<param name="uid">Optional. The unique event ID to remove. If null, all events will be removed.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="redraw()">
+			<summary>Used to redraw the calendar when the page resizes.</summary>
+			<code>&lt;body onresize="mycalendar.redraw()"&gt;</code>
+			<returns>Nothing</returns>
+		</member>
+	</Method>
+	<Event>
+		<member name="dateChanged">
+			<summary>Fires whenever the user nagivates to a new month or year.</summary>
+			<code>
+				mycalendar.dateChanged = <i>handler</i>;
+			</code>
+			<remarks>The handler should accept one date parameter which will contain the new calendar date.</remarks>
+		</member>
+		<member name="beforeCreateEvent">
+			<summary>Fires when the user double-clicks a date cell on the calendar, allowing the external code to provide an interface for creating a date.</summary>
+			<code>
+				mycalendar.beforeCreateEvent = <i>handler</i>;
+			</code>
+			<remarks>The handler should accept one date parameter which will contain the date the user selected.</remarks>
+		</member>
+		<member name="dateSelector">
+			<summary>Fires when the user double-clicks the calendar title, allowing the external code to provide an interface for choosing a new date. If null the default date selector will be presented.</summary>
+			<code>
+				mycalendar.dateSelector = <i>handler</i>;
+			</code>
+			<remarks>The handler is responsible for setting the new date.</remarks>
+		</member>
+	</Event>
+</doc>

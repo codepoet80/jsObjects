@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsDA-wsBind</name>
+		<code>
+			<c>var myws = new Object();</c>
+			<c>myws = wsbindNew("myws", "http://myserver/service/service.asmx", null);</c>
+			<c>var wsresponse = myws.webserviceFunction("param1", "param2");</c>
+		</code>
+		<remarks>jsDA-wsBind is a control for binding webservice methods to a Javascript object, so they can be called directly, without needing to build a SOAP response for every call. It is compatible with Internet Explorer 5.0 and FireFox 1.0 or better.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-wsbind/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="serviceName">
+			<summary>Contains the proper name of the webservice the wsBind jsObject is connected to.</summary>
+			<code>alert (myws.serviceName);</code>
+			<remarks>String. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="documentation">
+			<summary>Contains the web service documentation text, extracted from the Web Service Description response.</summary>
+			<code>alert (myws.documentation);</code>
+			<remarks>String. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="wsdl">
+			<summary>Contains the full text of the Web Service Description response.</summary>
+			<code>alert (myws.wsdl);</code>
+			<remarks>String. This should be fully valid XML and WSDL compliant if the target webservice is functioning properly. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="namespace">
+			<summary>Contains the namespace of the webservice the wsBind jsObject is connected to.</summary>
+			<code>alert (myws.namespace);</code>
+			<remarks>String. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="methods">
+			<summary>An object containing pointers to the methods exposed by the webservice.</summary>
+			<code>alert (myws.methods.length);</code>
+			<remarks>String. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="url">
+			<summary>Contains the URL of the webservice the wsBind jsObject is connected to.</summary>
+			<code>alert (myws.url);</code>
+			<remarks>String. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+	</Property>
+	<Method>
+		<member name="wsbindNew (string, string, pointer)">
+			<summary>Instantiates the wsBind object through assignment into a Javascript object, binding members of the specified webservice to the object.</summary>
+			<param name="wsbindName">Required. The name for the new wsBind Object. Must match the name of an empty Javascript object to contain the control.</param>
+			<param name="wsURL">Required. The URL of the webservice to bind to.</param>
+			<param name="callBack">Not implemented.</param>
+			<code>
+				<c>var myws = new Object();</c>
+				<c>myws = wsbindNew("myws", "http://myserver/service/service.asmx", null);</c>
+			</code>
+			<returns>The wsBind object with the webservice methods and properties attached..</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-wsbind members.</remarks>
+		</member>
+		<member name="describe (string)">
+			<summary>Returns text describing the webservice methods.</summary>
+			<param name="describeType">
+				<para>Optional. The type of description to return. Accepted values...</para>
+				<para>BASIC - Default. Returns a list of available methods, delimited by a line break.</para>
+				<para>WSDL - Returns the full WSDL text. Same as the wsdl property.</para>
+			</param>
+			<code>myws.describe("basic");</code>
+			<returns>String. </returns>
+		</member>
+		<member name="WebServiceFunction (string, pointer)">
+			<summary>Dynamic function creation. Makes a webservice call to the corresponding function, passing whatever parameters are passed in.</summary>
+			<param name="arguments">
+				Forwards arguments to the webservice.
+			</param>
+			<param name="callBack">Optional. If a callBack is specified the webservice call will be made asynchronously. When a response is returned the callBack function will be called, and the responseText passed as the first parameter.</param>
+			<code>
+				<c>myws.webservicefunction("param1", "param2", myCallBack);</c>
+				<c>function myCallBack(response)</c>
+				<c>{</c>
+				<c>  alert ("The webservice said: " + response);</c>
+				<c>}</c>
+			</code>
+			<returns>String. The response text of the webservice.</returns>
+			<remarks>Upon instantiation, the wsBind object will contain one method for each described method in the webservice (with matching local and service method names, accepting the parameters the webservice method expects. These methods are not known until the control connects to the webservice, but once bound, these methods can be called on the jsObject directly. The response from the service will be returned to the calling object.</remarks>
+		</member>
+	</Method>
+</doc>

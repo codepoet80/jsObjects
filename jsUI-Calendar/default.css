@@ -1,0 +1,14 @@
+.webCalTable { height: 100%; }
+
+.webCalToolbar { height: 55px; background-image: url(ToolbarBackground.gif); background-color: #C0C0C0; border-left: 1px solid #b4b4b4; border-bottom: 1px solid #b4b4b4; border-right: 1px solid gray; text-align:center; font-family: verdana, arial, helvetica; font-size: 11px;}
+.webCalToolbarDays { text-align:center; vertical-align:bottom; font-family: verdana, arial, helvetica; font-size: 10px;}
+.webCalToolbarTitle { font-family: verdana, arial, helvetica; font-weight: bold; font-size: 13px; vertical-align: top}
+.webCalControl { cursor:pointer; }
+.webCalInput { font-family: verdana, arial, helvetica; font-size:11px; margin-left:2px; }
+.webCalCell	{ height:16%;overflow:hidden;border:1px solid #EBE9ED; padding-left:4px; padding-top:4px; vertical-align: top; font-family: verdana, arial, helvetica; font-size: 10px; }
+.webCalCellInactive { background-color:#E7E7E7; }
+.webCalCellActive { background-color: white; }
+.webCalCellToday { background-color:white; font-weight: bold; border: 1px solid; border: 1px dashed #C8C8C8 }
+.webCalCellSelected { border:1px solid highlight; background-color: #EDF3FA; }
+
+.webCalEvent { padding-left: 2px; padding-bottom: 3px; cursor:pointer; }

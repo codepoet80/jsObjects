@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsUI-Grid</name>
+		<code>
+			<c>var mygrid = new Object();</c>
+			<c>mygrid = gridNew("mygrid", "default", document.getElementById("gridCell"), null);</c>
+			<c>mygrid.rowClick = doClick;</c>
+			<c>mygrid.cellClick = doClick;</c>
+			<c>mygrid.createColumn("col1", "First Column", null, null, false);</c>
+			<c>var cellArray = new Array();</c>
+			<c>cellArray[0] = mygrid.createCell("r1c1", "First Cell", "one", null, null, null);</c>
+			<c>mygrid.createRow("row1", cellArray);</c>
+		</code>
+		<remarks>The grid is a control that can be used for accepting input for large amounts of data in a structure that can be defined by the developer. It is compatible with Internet Explorer 5.0 and FireFox 1.0 or better.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-Grid/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="gridParent">
+			<summary>The DOM object to which the grid is attached. Frequently a DIV or TD, which can be used to provide a border or size constraints on the grid.</summary>
+			<code>document.getElementById(mygrid.gridParent.id);</code>
+			<default>document.body</default>
+			<returns>DOM Object. The property is read-only, having been assigned during Grid instantiation.</returns>
+		</member>
+		<member name="currentRow">
+			<summary>The DOM object of the currently selected row in the grid.</summary>
+			<code>alert (mygrid.currentRow.innerHTML);</code>
+			<returns>DOM Object. This property is read only.</returns>
+		</member>
+		<member name="rootDir">
+			<summary>Gets or sets the string value representing the path to the root of the jsObjects directory. Used for calculating style and graphics file paths. Initially set during instantiation.</summary>
+			<code>mygrid.rootDir = "http://localhost/libraries/jsobjects";</code>
+			<default>http://&lt;server&gt;/jsObjects</default>
+			<returns>String. This value only needs to be set if jsObjects is installed in a custom location.</returns>
+		</member>
+		<member name="textChecker">
+			<summary>Gets or sets a pointer to an optional instance of a jsUI-Textbox object. Used if validation is needed on grid cells.</summary>
+			<code>mygrid.textChecker = mytextChecker;</code>
+			<returns>Javascript Pointer. This value only needs to be set if jsUI-Textbox validation is to be used on grid cells in edit state.</returns>
+		</member>
+		<member name="readOnly">
+			<summary>Gets or sets the read/write status of the grid. This value must be set before rows are created. Default is false, meaning the Grid can be edited by the user.</summary>
+			<code>mygrid.readOnly = true;</code>
+			<returns>Boolean.</returns>
+		</member>
+	</Property>
+	<Method>
+		<member name="gridNew (string, string, object, string)">
+			<summary>Instantiates the grid through assignment into a Javascript object.</summary>
+			<param name="gridName">Required. The name for the new grid. Must match the name of an empty Javascript object to contain the grid.</param>
+			<param name="skinName">Optional. The name of the CSS (excluding the extension and path) file to use for the grid. If left blank, "default" will be used.</param>
+			<param name="gridParent">Optional. The object that the grid is to be attached to. If no value is passed, the grid will be appended to document.body</param>
+			<param name="rootDir">Optional. The path to the root of the jsObjects directory. If left blank, the default path will be used.</param>
+			<code>
+				<c>var mygrid = new Object();</c>
+				<c>mygrid = gridNew("mygrid", "default", document.getElementById("gridDiv"), "../jsobjects");</c>
+			</code>
+			<returns>The grid object.</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-Grid members.</remarks>
+		</member>
+		<member name="createColumn (string, string, string, string, boolean)">
+			<summary>Creates a column in the grid. Used to define the initial (empty) appearance of the grid.</summary>
+			<param name="colID">Required. A unique string to be used as the DOM ID for the new cell.</param>
+			<param name="colTitle">Required. The text that appears as the title of the column.</param>
+			<param name="colIcon">Optional. The path to an image that can be used as the title of the column. Pass "checkmark" to label a checkbox column with a standard graphic.</param>
+			<param name="colWidth">Required. The width in pixels for the new column.</param>
+			<param name="colIndex">Optional. Indicates whether or not the column is an index (numbered) column. Can be used to show row numbers in the first column.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="createCell(string, string, string, string, boolean, pointer)">
+			<summary>Creates a cell object that can be added to a new row in a grid.</summary>
+			<param name="cellID">Required. A unique string to be used as the DOM ID for the new cell.</param>
+			<param name="cellText">Optional. The text that appears to the user in the cell.</param>
+			<param name="cellValue">Optional. The value of the cell, not visible to the user.</param>
+			<param name="cellType">
+				<para>
+					Required. The type parameter is used to specify one of the follow input cell types:<para/>
+				</para>
+				<para>
+					CHECK - a checkbox for boolean input
+				</para>
+				<para>
+					ICON - a static image for representing an item in the grid. The cellValue parameter contains the path to the image, while the cellText parameter contains the tooltip text.<br/>
+				</para>
+				<para>
+					ELLIPSIS - used in conjunction with the cellMore parameter. In this cell type, entering edit mode will show an ellipsis (...) button that can be used to call an external function.<br/>
+				</para>
+				<para>
+					TEXT - Free-form text input. However, if the textChecker property has been assigned, the string "TEXT" can be replaced with a valid jsUI-Textbox datatype to allow input control and validation.<br/>
+				</para>
+			</param>
+			<param name="cellLocked">Optional. True or False indicating whether or not the user can edit the value of the cell.</param>
+			<param name="cellMore">Optional. Used in conjunction with the cellType ELLIPSIS. Pointer to a function called when the ellipsis is clicked. The functions return value becomes the cells value.</param>
+			<returns>Object. A cell object prepared according to supplied parameters, that can be added to a row using the createRow method.</returns>
+		</member>
+		<member name="createRow(string, array)">
+			<summary>Adds a new row to the grid, containing the cells passed in the array.</summary>
+			<param name="rowID">Required. A unique string to be used as the DOM ID for the new row.</param>
+			<param name="arrCells">Required. An array of cell objects created using the createCell method.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="editRow(string)">
+			<summary>Used to put a grid row into edit mode.</summary>
+			<param name="rowID">Required. The ID of the row to be edited.</param>
+			<returns>Object. The grid object.</returns>
+		</member>
+		<member name="removeRow(string)">
+			<summary>Removes a row from the grid. Fires the deleteDone event before removing the row.</summary>
+			<param name="rowID">Required. The ID of the row to be deleted. Pass the string "all" to remove all rows (excluding the title row) from the grid.</param>
+			<returns>Object. The grid object.</returns>
+		</member>
+		<member name="moveRow(string)">
+			<summary>Used to move the row selection up or down.</summary>
+			<param name="rowID">Required. The ID of the currently selected row. This value can be obtained with the currentRow property.</param>
+			<param name="direction">Required. A string indicating which direction to move the selection. Use "UP" or "DOWN"</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="getGridData(string)">
+			<summary>Returns an object containing column contents for a given row.</summary>
+			<param name="rowID">Optional. The ID of the row to get data from. This parameter is optional, and constrains the return value to only a specific row. If excluded data from the entire grid will be returned.</param>
+			<returns>Object. An object representing the data in the grid. Use the serializeObject common function to see a textual representation of the data.</returns>
+			<code>alert (serializeObject(mygrid.getGridData()));</code>
+		</member>
+		<member name="newButton(pointer)">
+			<summary>Adds a new button to the bottom of the grid, allowing the user to invoke an external function for adding rows to the grid.</summary>
+			<param name="newFunc">Required. Pointer to an external function to be called when the new button is clicked.</param>
+			<returns>Nothing.</returns>
+		</member>
+	</Method>
+	<Event>
+		<member name="cellClick">
+			<summary>Fires whenever a cell is clicked, passing the target object, so that external code can respond.</summary>
+			<code>
+				mygrid.cellClick = <i>handler</i>;
+			</code>
+			<remarks>Although Mozilla and Internet Explorer disagree on how to reference the target object, the component handles this, reliably passing the target for both browers.</remarks>
+		</member>
+		<member name="editDone">
+			<summary>Fires when a cell's edit state is exited by loss of focus or keyboard input, passing the cell object that was just edited, so that external code can respond.</summary>
+			<code>
+				mygrid.editDone = <i>handler</i>;
+			</code>
+			<remarks>Although Mozilla and Internet Explorer disagree on how to reference the target object, the component handles this, reliably passing the target for both browers.</remarks>
+		</member>
+		<member name="deleteDone">
+			<summary>Fires before a row is deleted from the grid. Used to allow external code to control or react to row deletion behaviour.</summary>
+			<code>
+				mygrid.deleteDone = <i>handler</i>;</code>
+			<remarks>Expects a true or false, defaulting to true to allow the row to be removed.</remarks>
+		</member>
+	</Event>
+</doc>

@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsUI-Taskbar</name>
+		<code>
+			<c>var mytaskbar = new Object();</c>
+			<c>mytaskbar = taskbarNew("mytaskbar", "default", document.getElementById("taskCell"), null);</c>
+			<c>mytaskbar.taskClick = doClick;</c>
+			<c>mytaskbar.createFolder("taskFolder1", "Folder One");</c>
+			<c>mytaskbar.createTask("task1", "First Task", "../images/icon.jpg", "taskFolder1");</c>
+		</code>
+		<remarks>The taskbar is a nested navigation control, based on those frequently found in Windows or the MacOS. It is compatible with Internet Explorer 5.0 and FireFox 1.0 or better.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-Taskbar/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="taskbarParent">
+			<summary>The DOM object to which the taskbar is attached. Frequently a DIV or TD.</summary>
+			<code>alert (mytaskbar.taskbarParent.id);</code>
+			<remarks>DOM Object. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="rootDir">
+			<summary>Gets or sets the string value representing the path to the root of the jsObjects directory. Used for calculating style and graphics file paths. Initially set during instantiation.</summary>
+			<code>mytaskbar.rootDir = "http://localhost/libraries/jsobjects";</code>
+			<default>http://&lt;server&gt;/jsObjects</default>
+			<remarks>String. This value only needs to be set if jsObjects is installed in a custom location.</remarks>
+		</member>
+	</Property>
+	<Method>
+		<member name="taskbarNew (string, string, object, string)">
+			<summary>Instantiates the taskbar through assignment into a Javascript object.</summary>
+			<param name="taskbarName">Required. The name for the new taskbar. Must match the name of an empty Javascript object to contain the taskbar.</param>
+			<param name="skinName">Optional. The name of the CSS (excluding the extension and path) file to use for the taskbar. If left blank, "default" will be used.</param>
+			<param name="taskbarParent">Optional. The DOM object that the taskbar is to be attached to. If no value is passed, the taskbar will be appended to document.body</param>
+			<param name="rootDir">Optional. The path to the root of the jsObjects directory. If left blank, the default path will be used.</param>
+			<code>
+				<c>var mytaskbar = new Object();</c>
+				<c>mytaskbar = taskbarNew("mytaskbar", "default", document.getElementById("taskbarDiv"), "../jsobjects");</c>
+			</code>
+			<returns>The taskbar object.</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-Taskbar members.</remarks>
+		</member>
+		<member name="createFolder (string, string)">
+			<summary>Creates a folder in the taskbar. Folders contain task icons. There must be at least one folder.</summary>
+			<param name="folderID">Required. A unique string to be used as the DOM ID for the new folder.</param>
+			<param name="folderName">Required. The text that appears as the title of the folder.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="createTask (string, string, string, string)">
+			<summary>Creates a task icon in the specified folder in the taskbar.</summary>
+			<param name="taskID">Required. A unique string to be used as the DOM ID for the new task.</param>
+			<param name="taskText">Required. The text that appears as the title of the task.</param>
+			<param name="taskIcon">Optional. The icon for the task.</param>
+			<param name="folderID">Required. The folder to add the task to.</param>
+			<returns>Nothing</returns>
+		</member>
+		<member name="taskbarResize()">
+			<summary>A method that can be attached to the resize events of a page, to resize the taskbar to fit the available space. This is optional, since the external page may not wish to have the taskbar resize.</summary>
+			<code>&lt;body onresize="mytaskbar.taskbarResize()"&gt;</code>
+		</member>
+	</Method>
+	<Event>
+		<member name="taskClick">
+			<summary>Fires whenever a task is clicked, passing the ID of the target object, so that external code can respond.</summary>
+			<code>
+				mytaskbar.itemClick = <i>handler</i>;
+			</code>
+			<remarks>The handler should accept one string parameter which will contain the ID of the button clicked.</remarks>
+		</member>
+	</Event>
+</doc>

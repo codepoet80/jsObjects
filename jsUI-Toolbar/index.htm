@@ -1,0 +1,128 @@
+<html>
+<head>
+    <title>jsUI-Toolbar Sample</title>
+    <script language="javascript" src="../jsUI-Global/common.js"></script>
+	<script language="javascript" src="../jsUI-Global/uiCommon.js"></script>
+	<script language="javascript" src="../jsUI-Toolbar/component.js"></script>
+    <script>
+    var mytoolbar = new Object();
+    function addToolbar()
+    {   
+        mytoolbar = toolbarNew("mytoolbar", "default", document.getElementById("toolbarCell"), null);
+        mytoolbar.itemClick = doClick;
+        mytoolbar.createButton("btnCut", "Cut", "../images/cut.gif");
+        mytoolbar.createButton("btnCopy", "Copy", "../images/copy.gif");
+        mytoolbar.createButton("btnPaste", "Paste", "../images/paste.gif");
+        mytoolbar.createSeperator();
+        
+        //Activate other examples
+        document.getElementById("btnAddToolbar").disabled = true;
+        document.getElementById("btnAddButton").disabled = false;
+        document.getElementById("btnAddSeperator").disabled = false;
+        document.getElementById("btnAddCustom").disabled = false;
+        document.getElementById("btnAddList").disabled = false;
+    }
+    function doClick(btnID)
+    {
+        document.getElementById("txtButtonValue").value = btnID;
+    }
+    
+    var lastButtonNum = 1;
+    var lastSeperator = false;
+    function addButton()
+    {
+        lastSeperator = false;
+        var text = "New Button " + lastButtonNum;
+        var image = "../images/user-s.gif";
+        mytoolbar.createButton("btnUser" + lastButtonNum, text, image);
+        lastButtonNum++;
+    }
+    
+    function addSeperator()
+    {
+        if (!lastSeperator)
+        {
+            lastSeperator = true;
+            mytoolbar.createSeperator();
+        }
+    }
+    
+    function addCustomButton()
+    {
+        lastSeperator = false;
+        var text = document.getElementById("txtCustomValue").value;
+        var image = document.getElementById("lstButtonImage").options[document.getElementById("lstButtonImage").selectedIndex].value;
+        if (image != "none")
+        {
+            mytoolbar.createButton("btnUser" + lastButtonNum, text, image);
+            lastButtonNum++;
+        }           
+    }
+    
+    function addList()
+    {
+        var listItems = new Array();
+        listItems[0] = mytoolbar.createListItem("listItem1", "First Item", "one");
+        listItems[1] = mytoolbar.createListItem("listItem2", "Second Item", "two");
+        mytoolbar.createList("toolbarList", "Choose an Item", listItems, "100");
+    }
+    </script>
+    <link rel='stylesheet' type='text/css' href='../documentation.css'></link>
+</head>
+<body>
+<body vlink="#0000ff" link="#0000ff" alink="#0000ff">
+<table width="100%"><tr><td valign="bottom">
+<h3>Toolbar Sample</h3>
+</td><td align="right" valign="middle"><a href="documentation.xml">Reference</a></td></tr></table>
+<div class="sample">This sample demonstrates how to create and modify a toolbar.
+<br />&nbsp;
+<div id="toolbarCell" style="height:25px"></div><br />
+</div>
+    <br />
+    <input type="button" value="Create Toolbar" onclick="addToolbar()" id="btnAddToolbar"/>
+    <div class="description">
+            Instantiate the toolbar into an empty, global object, and add it to the DOM, using the <i>toolbarNew</i> method.
+    </div>
+    
+    Button ID: <input type="text" value="" id="txtButtonValue" disabled="true"/>
+    <div class="description">
+            Handle the <i>itemClick</i> event to get information about buttons when they are clicked
+    </div>
+
+    <input type="button" value="Add Button" id="btnAddButton" disabled="true" onclick="addButton()"/>
+    <div class="description">
+            Use the <i>createButton</i> method to add a button to the toolbar      
+    </div>
+    <input type="button" value="Add Seperator" id="btnAddSeperator" disabled="true" onclick="addSeperator()"/>
+    <div class="description">
+            Use the <i>createSeperator</i> method to add a seperator to the toolbar     
+    </div>
+
+    Specify button text and choose an image...<br />
+    <input type="text" id="txtCustomValue" value="Button Text"/>
+    <select id="lstButtonImage">
+        <option value="none">Choose an Image</option>
+        <option value="../images/computer-s.gif">Computer</option>
+        <option value="../images/folder-s.gif">Folder</option>
+        <option value="../images/help.gif">Help</option>
+        <option value="../images/drive-s.gif">Drive</option>
+    </select><br />
+    <input type="button" value="Add Button" id="btnAddCustom" disabled="true" onclick="addCustomButton()"/>
+    <div class="description">
+            Use the <i>createButton</i> method to add a button based on the values selected above
+    </div>
+    
+    <input type="button" value="Add List" id="btnAddList" disabled="true" onclick="addList()"/>
+    <div class="description">
+            Use the <i>createListItem</i> and <i>createList</i> methods to add a listbox to the toolbar      
+    </div>
+    
+    <br />
+    <div class="footer">To view the source code, right-click this page and choose View Source from the shortcut menu that appears.</div>
+    <br />
+    © 2005 Jonathan Wise. Some rights reserved. 
+</body>
+</html>
+
+ 
+ 

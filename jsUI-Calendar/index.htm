@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>jsUI-Calendar Sample</title>
+    <script language="javascript" src="../jsUI-Global/common.js"></script>
+	<script language="javascript" src="../jsUI-Global/uiCommon.js"></script>
+	<script language="javascript" src="../jsUI-Textbox/component.js"></script>
+	<script language="javascript" src="../jsUI-Calendar/component.js"></script>
+    <script>
+    var mycalendar = new Object();
+    var textChecker = new Object();
+    function addCalendar()
+    {   
+        //Size cell to make room
+        document.getElementById("calendarCell").style.height = "325px";
+        
+        //Add calendar
+    	mycalendar = calendarNew("mycalendar", "default", document.getElementById("calendarCell"), null);
+    	textChecker = textboxNew("textChecker", "default", null, null);
+    	mycalendar.textChecker = textChecker;
+		mycalendar.beforeCreateEvent = eventCreator;
+		mycalendar.dateClicked = dateClicked;
+		mycalendar.eventClicked = eventClicked;
+		
+        //Activate other examples
+        document.getElementById("btnAddcalendar").disabled = true;
+        document.getElementById("btnSetdate").disabled = false;
+    }
+    
+    function eventClicked(objEvent)
+    {
+        alert (objEvent.uid);
+    }
+    
+    function setDate()
+    {
+        var dateObj = new Date();
+		mycalendar.setDate(dateObj);
+		
+		//Activate other examples
+		document.getElementById("txtEventName").disabled = false;
+		document.getElementById("btnAddEvent").disabled = false;
+        document.getElementById("btnSetdate").disabled = true;
+    }
+    
+    var lastEvent = 1;
+    function eventCreator(objDate)
+    {
+        var eventSummary = prompt("Enter the name of the event: ", "");
+		if (eventSummary != null)
+		{
+		    mycalendar.addEvent("new" + lastEvent, objDate, null, null, eventSummary, eventSummary, "navy", null);
+		    lastEvent++;
+		}
+    }
+
+    function addEvent()
+    {
+        var eventName = document.getElementById("txtEventName").value;
+        if (eventName != "")
+        {
+            mycalendar.addEvent("userEvent" + lastEvent, mycalendar.selectedDate, null, null, eventName, eventName, null, null);
+            document.getElementById("btnRmvEvent").disabled = false;
+            lastEvent++;
+        }
+    }
+    	
+	function removeEvent()
+	{
+	    mycalendar.removeEvent("userEvent" + (lastEvent - 1));
+	    lastEvent--;
+	    if (lastEvent == 1)
+	    {
+	        lastEvent = 1;
+	        document.getElementById("btnRmvEvent").disabled = true;
+	    }
+	}
+    
+    function dateClicked(objDate)
+    {
+        document.getElementById("txtSelectedDate").value = objDate;
+    }
+    </script>
+    <link rel='stylesheet' type='text/css' href='../../jsObjects/documentation.css'></link>
+</head>
+<body vlink="#0000ff" link="#0000ff" alink="#0000ff">
+<table width="100%"><tr><td>
+<h3>Calendar Sample</h3>
+</td><td align="right"><a href="documentation.xml">Reference</a></td></tr></table>
+<div class="sample" style="width:98%">This sample demonstrates how to create and modify a Calendar.<br />&nbsp;
+<div id="calendarCell" style="width:475px; border-left:0px solid #C0C0C0;background-color:#fff;"></div>
+&nbsp;<br /></div>
+    <input type="button" value="Create Calendar" onclick="addCalendar()" id="btnAddcalendar"/>
+    <div class="description">
+            Instantiate the Calendar into an empty, global object, and add it to the DOM, using the <i>calendarNew</i> method.
+    </div>
+    
+    <input type="button" value="Set Date" id="btnSetdate" onclick="setDate()" disabled="true"/>
+    <div class="description">
+            Create a Javascript Date object and pass it into the <i>setDate</i> method to set the calendar's start date.
+    </div>
+
+    Event Name: <input type="text" value="" id="txtEventName" disabled="true"/>
+    <input type="button" value="Add Event" id="btnAddEvent" onclick="addEvent()" disabled="true"/>
+    <div class="description">
+            Use the <i>addEvent</i> method to create an event on a given date.
+    </div>
+    
+   <input type="button" value="Remove Event" id="btnRmvEvent" onclick="removeEvent()" disabled="true"/>
+    <div class="description">
+            Use the <i>removeEvent</i> method to remove an event by ID.
+    </div>
+
+    Selected Date: <input type="text" value="" id="txtSelectedDate" disabled="true" style="width:180px"/>
+    <div class="description">
+            Handle the <i>dateClicked</i> event to respond to the user clicking a day on the calendar.
+    </div>
+
+    <div class="description">
+            Handle the <i>beforeCreateEvent</i> event to add an event to the calendar when the user double clicks a date.
+    </div>
+    
+    <br />
+    <div class="footer">To view the source code, right-click this page and choose View Source from the shortcut menu that appears.</div>
+    <br />
+    © 2005 Jonathan Wise. Some rights reserved. 
+</body>
+</html>
+
+ 
+ 

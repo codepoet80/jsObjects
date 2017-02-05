@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Textbox Sample</title>
+    <script language="javascript" src="../jsUI-Global/common.js"></script>
+	<script language="javascript" src="../jsUI-Global/uiCommon.js"></script>
+	<script language="javascript" src="../jsUI-Textbox/component.js"></script>
+    <script>
+        
+    function addCaption()
+    {
+        var captionText = document.getElementById("txtCaptionText").value;
+        document.getElementById("textboxCell").innerHTML = "<span class='TextBoxCaption' />" + captionText + "</span>";
+        document.getElementById("btnAddCaption").disabled = true;
+    }
+    
+    function addEmptyTextbox()
+    {
+        var useDataType = document.getElementById("lstNewDataType").options[document.getElementById("lstNewDataType").selectedIndex].value;
+        document.getElementById("textboxCell").innerHTML += "<input id='txtTester' style='height: 15px' type='text' datatype='" + useDataType + "'/>";
+        document.getElementById("btnAddCaption").disabled = true;
+        document.getElementById("btnAddEmptyTextbox").disabled = true;
+        document.getElementById("btnAddTextboxObject").disabled = false;
+    }
+    
+    var mytextbox = new Object();
+    function addTextboxObject()
+    {   
+        mytextbox = textboxNew("mytextbox", "default", document.getElementById("textboxCell"), null);
+        mytextbox.keyFailed = handleBadKeys;
+        document.getElementById("btnAddTextboxObject").disabled = true;
+        document.getElementById("txtTester").focus();
+        
+        var useDataType = document.getElementById("lstNewDataType").options[document.getElementById("lstNewDataType").selectedIndex].text;
+        document.getElementById("spnSummary").innerHTML += "<b>The textbox above should now restrict input to adhere to the dataype " + useDataType + ". Try it!</b>";
+        
+        document.getElementById("btnReload").disabled = false;
+    }
+    
+    function handleBadKeys(key, keyCode, maxLength, txtBoxID)
+    {
+        var currDataType = document.getElementById(txtBoxID).attributes.getNamedItem("datatype").value;
+        document.getElementById("txtKeyFailed").value = "The " + key + " key is not valid for the datatype " + currDataType + "!";
+        setTimeout("document.getElementById('txtKeyFailed').value=''", 2000);
+    }
+    
+    function doReload()
+    {
+        window.location.reload();
+    }
+    
+    </script>
+    <link rel='stylesheet' type='text/css' href='../documentation.css'></link>
+</head>
+<body vlink="#0000ff" link="#0000ff" alink="#0000ff">
+<table width="100%"><tr><td valign="bottom">
+<h3>Textbox Sample</h3>
+</td><td align="right" valign="middle"><a href="documentation.xml">Reference</a></td></tr></table>
+<div class="sample">This sample demonstrates how to modify an existing textbox and turn it into a jsUI-Textbox.
+    <br />&nbsp;
+    <div id="textboxCell" style="height:25px"></div>
+    <span id="spnSummary"></span>
+</div>
+    <br />
+    
+    <input type="text" value="My Caption" id="txtCaptionText"/>
+    <input type="button" value="Create Caption" onclick="addCaption()" id="btnAddCaption"/>
+    <div class="description">
+            Optionally create a SPAN as the caption for the new textbox.
+    </div>
+    
+    <select id="lstNewDataType">
+        <option value="integer">Integer</option>
+        <option value="float">Float</option>
+        <option value="alpha">Alpha Only</option>
+        <option value="alphanumeric">Alphanumeric</option>
+        <option value="date">Date</option>
+        <option value="datetime">Date/Time</option>
+    </select>
+    <input type="button" value="Create Textbox" onclick="addEmptyTextbox()" id="btnAddEmptyTextbox"/>
+    <div class="description">
+            Create an empty HTML textbox on the page, appending the new attribute <i>datatype</i>.<br />
+            <br /><b>Note:</b> HTML creation for jsUI-Textbox is typically done at design-time, this example is after rendering in order to break the process into steps.
+    </div>
+    
+    <input type="button" value="Create Textbox Object" onclick="addTextboxObject()" id="btnAddTextboxObject" disabled=true/>
+    <div class="description">
+            Instantiate the textbox into an empty, global object using the <i>textboxNew</i> method.<br />
+            <br /><b>Note:</b> Although this example only contains a single textbox, on instantiation, all textboxes below the specified parent object with the <i>datatype</i> attribute will be converted to a jsUI-Textbox.
+            
+    </div>
+
+    <input type="text" value="" id="txtKeyFailed" disabled="true" style="width:245px"/>
+    <div class="description">
+            Handle the <i>keyFailed</i> event to provide feedback when an invalid key is pressed
+    </div>
+    
+    <input type="button" value="Start Again" id="btnReload" disabled="true" onclick="doReload()"/>
+    <div class="description">
+            Reload the page to create a new textbox.     
+    </div>
+    
+    <br />
+    <div class="footer">To view the source code, right-click this page and choose View Source from the shortcut menu that appears.</div>
+    <br />
+    © 2005 Jonathan Wise. Some rights reserved. 
+</body>
+</html>
+
+ 
+ 

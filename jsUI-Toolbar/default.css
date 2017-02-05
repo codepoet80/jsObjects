@@ -1,0 +1,4 @@
+.ToolbarMain		{ font-family: Arial, Helvetica; font-size: 11px; background: buttonface; padding-top: 2px; padding-bottom: 1px; cursor: default; }
+.ToolbarItemOut		{ padding: 2px; border: 1px solid buttonface; }
+.ToolbarItemOver	{ padding: 2px; background: activecaption; border: 1px solid threedshadow; }
+.ToolbarItemDown	{ padding: 2px; background: buttonface; border: 1px solid threedshadow; }

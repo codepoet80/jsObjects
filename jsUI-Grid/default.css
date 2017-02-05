@@ -1,0 +1,12 @@
+.GridMain			{ background: buttonface;}
+.GridTitleCell		{ overflow:hidden; color: Black; font-family: Arial, Helvetica; font-size: 11px; background: buttonface; border-right: 1px solid threedshadow; border-bottom: 1px solid threedshadow; border-left: 1px solid threedhighlight; border-top: 1px solid threedhighlight; padding-top: 2px; padding-bottom: 2px; padding-right: 4px; padding-left: 4px; cursor: default}
+.GridRow			{ overflow:hidden; border-left: 1px solid black; cursor: default}
+
+.GridCell			{ overflow:hidden; background: window; color: black; font-family: Arial, Helvetica; font-size: 11px; border-bottom: 1px solid threedface; border-right: 1px solid threedface; padding-top: 3px; padding-bottom: 3px; padding-right: 5px; padding-left: 5px; cursor: default}
+.GridCellOver		{ overflow:hidden; background: highlight; color: white; font-family: Arial, Helvetica; font-size: 11px; border-bottom: 1px solid threedface; border-right: 1px solid threedface; padding-top: 3px; padding-bottom: 3px; padding-right: 5px; padding-left: 5px; cursor: default}
+.GridTextClicked	{ overflow:hidden; background: window; color: black; font-family: Arial, Helvetica; font-size: 11px; border-bottom: 1px solid threedface; border-right: 1px solid threedface; padding-left: 5px; }
+.GridCheckClicked	{ overflow:hidden; background: window; color: black; font-family: Arial, Helvetica; font-size: 11px; border-bottom: 1px solid threedface; border-right: 1px solid threedface; padding-left: 2px; padding-bottom: 1px}
+.GridEllipsisClicked{ overflow:hidden; background: window; color: black; font-family: Arial, Helvetica; font-size: 11px; border-bottom: 1px solid threedface; border-right: 1px solid threedface; padding-left: 2px; }
+.EditTextField		{ overflow:hidden; color: black; font-family: Arial, Helvetica; font-size: 11px; border: 1px solid black; }
+.EditText			{ overflow:hidden; color: black; font-family: Arial, Helvetica; font-size: 11px; }
+.EditEllipsis		{ overflow:hidden; background: buttonface; color: black; font-family: Arial, Helvetica; font-size: 11px; }

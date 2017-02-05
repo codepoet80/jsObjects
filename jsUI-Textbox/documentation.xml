@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsUI-Textbox</name>
+		<code>
+			<c>var mytextbox = new Object();</c>
+			<c>mytextbox = textboxNew("mytextbox", "default", null, null);</c>
+		</code>
+		<remarks>The jsUI-textbox is a single Javascript Object on the page that, upon instantiation, modifies and controls HTML textboxes that are flagged with specific attributes. The HTML textboxes retain their standard members, and the jsUI-Textbox presents it's own members that can be accessed through the Javascript Object.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-textbox/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="textboxParent">
+			<summary>The DOM Object that contains the modified textboxes. Usually document.body.</summary>
+			<code>alert (mytextbox.textboxParent.id);</code>
+			<remarks>DOM Object. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="rootDir">
+			<summary>Gets or sets the string value representing the path to the root of the jsObjects directory. Used for calculating style file paths. Initially set during instantiation.</summary>
+			<code>mytextbox.rootDir = "http://localhost/libraries/jsobjects";</code>
+			<default>http://&lt;server&gt;/jsObjects</default>
+			<remarks>String. This value only needs to be set if jsObjects is installed in a custom location.</remarks>
+		</member>
+	</Property>
+	<Method>
+		<member name="textboxNew (string, string, object, string)">
+			<summary>Appends jsUI-Textbox methods to all textboxes below the specified parent, that have the required attributes, through assignment into a Javascript object.</summary>
+			<param name="textboxName">Required. The name for the new textbox control. Must match the name of an empty Javascript object to contain the control.</param>
+			<param name="skinName">Optional. The name of the CSS (excluding the extension and path) file to use for the textboxes to be modified by the control. If left blank, "default" will be used.</param>
+			<param name="textboxParent">Optional. The DOM object that contains the textboxes to be modified. If no value is passed, the all textboxes in document.body will be modified.</param>
+			<param name="rootDir">Optional. The path to the root of the jsObjects directory. If left blank, the default path will be used.</param>
+			<code>
+				<c>var mytextbox = new Object();</c>
+				<c>mytextbox = textboxNew("mytextbox", "default", null, "../jsobjects");</c>
+			</code>
+			<returns>The textbox object.</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-textbox members.</remarks>
+		</member>
+		<member name="disable (object)">
+			<summary>Not implemented.</summary>
+			<param name="target">The object to disable.</param>
+			<remarks>This method is not yet implemented.</remarks>
+		</member>
+		<member name="enable (object)">
+			<summary>Not implemented.</summary>
+			<param name="target">The object to enable.</param>
+			<remarks>This method is not yet implemented.</remarks>
+		</member>
+		<member name="formatNumeric()">
+			<summary>A method that can be attached to the blur and focus events of a textbox to format numberical values like Excel's General format.</summary>
+			<code>&lt;input type="text" datatype="float" datalength="5.2" onfocus="mytextbox.formatNumeric(this, 'out');" onblur="mytextbox.formatNumeric(this, 'in');"/&gt;</code>
+		</member>
+	</Method>
+	<Event>
+		<member name="keyFailed">
+			<summary>Fires whenever input is restricted by the textbox control, allowing external code to respond or display feedback to the user.</summary>
+			<code>
+				mytoolbar.keyFailed = <i>handler</i>;
+			</code>
+			<remarks>
+				<para>The handler should accept three string parameters: </para>
+				<para>key - contains the value for the key pressed that fired the event</para>
+				<para>keyCode - contains the key code value for the key pressed that fired the event</para>
+				<para>objID - contains the DOM ID of the textbox on which the event was fired</para>
+				<para>Additional details can be found by accessing the attributes collection of the textbox</para>
+			</remarks>
+		</member>
+	</Event>
+	<Object>
+		<member name="INPUT">
+			<summary>Inherits from the DOM input Object. The presence of the additional attributes is what signals that a textbox is actually a jsUI-Textbox.</summary>
+			<param name="datatype">
+				<para>Required. A string that specifies what datatype is to be used for validation and input control of the textbox. Valid types include...</para>
+				<para> </para>
+				<para>ANY - Allows any keys to be entered</para>
+				<para>INTEGER - Allows only strictly numeric values to be entered.</para>
+				<para>FLOAT - Allows numeric values, plus numeric modifiers (comma, decimal, minus sign) to be entered.</para>
+				<para>ALPHANUMERIC - Allows strictly numeric or alphabet characters to be entered.</para>
+				<para>ALPHA - Allows only alphabet characters to be entered.</para>
+				<para>READONLY - Restricts all keyboard input.</para>
+				<para>DATE - Accepts numeric values, formatted to mm/dd/yyyy.</para>
+				<para>DATETIME - Accepts numeric values, formatted to mm/dd/yyyy HH:MM:SS.</para>
+				<para>MONTHYEAR - Accepts numeric values, formatted to mm/yyyy.</para>
+				<para>TIME - Accepts numeric values, formatted to HH:MM:SS.</para>
+				<para>PHONENUMBER - Accepts numeric values, formatted to 555-555-5555.</para>
+				<para>CREDITCARD - Accepts numeric values, formatted to 5555-5555-5555-5555. Not useful for AMEX.</para>
+				<para>KEYCODES - Accepts any keyboard input, but displays character code value instead.</para>
+				<para> </para>
+			</param>
+			<param name="datalength">
+				<para>Optional. Restricts the number of characters that can be entered into a textbox.</para>
+				<para>For a datatype of FLOAT, the length on each side of a decimal by using a data length like 5.2 -- where 5 numbers can be entered before the decimal, and 2 after.</para>
+			</param>
+			<code>
+				&lt;input type="text" datatype="float" datalength="5.2" id="ShippingCost" name="ShippingCost"/&gt;
+			</code>
+			<remarks>Depending on the skin loaded, jsUI-Textbox fields may have different positioning on the page than expected. Use the style tag to control appearance where necessary.</remarks>
+		</member>
+		<member name="SPAN">
+			<summary>The SPAN tag can be used to provide an in-box caption for a jsUI-Textbox.</summary>
+			<param name="class">Use "TextBoxCaption" to use a proceeding span to caption a jsUI-Textbox.</param>
+			<remarks>Depending on the skin loaded, jsUI-Textbox captioning spans may have different positioning on the page than expected. Use the style tag to control appearance where necessary.</remarks>
+			<code>
+				<c>&lt;span style="width:305px" class="TextBoxCaption"&gt;Company Name&lt;/span&gt;</c>
+				<c>&lt;input style="width:305px" type="text" datatype="any" datalength="30" id="CompanyName" name="CompanyName"/&gt;</c>
+			</code>
+		</member>
+	</Object>
+</doc>

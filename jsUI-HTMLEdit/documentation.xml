@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="../documentation.xsl" type="text/xsl" media="screen"?>
+<doc xml:whitespace="preserve">
+	<assembly>
+		<name>jsUI-HTMLEdit</name>
+		<code>
+			<c>var myeditor = new Object();</c>
+			<c>myeditor = htmleditNew("myeditor", "default", null, null);</c>
+			<c>myeditor.loadHTMLFile("document.htm");</c>
+			<c>myeditor.getHTML();</c>
+		</code>
+		<remarks>The jsUI-HTMLEdit control creates an IFRAME object, and modifies it to contain methods and properties that provide HTML editing functions to be used in both IE and Mozilla.</remarks>
+		<requirements>
+			<para>jsUI-Global/common.js</para>
+			<para>jsUI-Global/uiCommon.js</para>
+			<para>jsUI-HTMLEdit/component.js</para>
+		</requirements>
+		<sample>index.htm</sample>
+	</assembly>
+	<Property>
+		<member name="htmleditParent">
+			<summary>The DOM object that the IFRAME has been appended to.</summary>
+			<code>alert (myeditor.htmleditParent);</code>
+			<remarks>DOM Object. This property is assigned on instantiation and is read only.</remarks>
+		</member>
+		<member name="rootDir">
+			<summary>Gets or sets the string value representing the path to the root of the jsObjects directory. Used for calculating style and image file paths. Initially set during instantiation.</summary>
+			<code>myeditor.rootDir = "http://localhost/libraries/jsobjects";</code>
+			<default>http://&lt;server&gt;/jsObjects</default>
+			<remarks>String. This value only needs to be set if jsObjects is installed in a custom location.</remarks>
+		</member>
+		<member name="lastPath">
+			<summary>Sets or gets the last file path opened by the user</summary>
+			<code>myeditor.lastPath = "http://myserver/users/home/index.htm";</code>
+			<remarks>Read/Write. This value will be updated whenever a file is opened by the user.</remarks>
+		</member>
+		<member name="lastLink">
+			<summary>Sets or gets the last URL entered by the users</summary>
+			<code>myeditor.lastLink = "http://myserver/users/home";</code>
+			<remarks>Read/Write. This value will be updated whenever a link is created by the user.</remarks>
+		</member>
+		<member name="lastImage">
+			<summary>Sets or gets the last image path entered by the users</summary>
+			<code>myeditor.lastImage = "http://myserver/users/home/pic.jpg";</code>
+			<remarks>Read/Write. This value will be updated whenever an image is inserted by the user.</remarks>
+		</member>
+	</Property>
+	<Method>
+		<member name="htmleditNew (string, string, object, string)">
+			<summary>Creates the editor IFRAME in the specified parent, and attaches the components members to the empty Javascript object. The IFRAME will fill 100% of the parents available height and width.</summary>
+			<param name="htmleditName">Required. The name for the new editor. Must match the name of an empty Javascript object to contain the control.</param>
+			<param name="skinName">Optional. The name of the CSS (excluding the extension and path) file to use for the HTMLEditor. If left blank, "default" will be used.</param>
+			<param name="htmleditParent">Optional. The DOM object to attach the IFRAME to. If empty the IFRAME will be appended to document.body.</param>
+			<param name="rootDir">Optional. The path to the root of the jsObjects directory. If left blank, the default path will be used.</param>
+			<code>
+				<c>var myeditor = new Object();</c>
+				<c>myeditor = htmleditNew("myeditor", "default", document.getElementById("divEditor"), "../jsobjects");</c>
+			</code>
+			<returns>The htmledit object.</returns>
+			<remarks>This is the only method that does not appear to be a member of the object -- because the object can't have members until it's instantiated. A blank object is created and will be filled with the jsUI-HTMLEdit members.</remarks>
+		</member>
+		<member name="getHTML ()">
+			<summary>Used to obtain the HTML markup for the contents of the editor window.</summary>
+			<code>myeditor.getHTML();</code>
+			<returns>String. The HTML contents of the editor window.</returns>
+		</member>
+		<member name="getEncodedHTML ()">
+			<summary>Used to obtain the HTML markup, encoded for XML transmission, for the contents of the editor window.</summary>
+			<code>myeditor.getEncodedHTML();</code>
+			<returns>String. The HTML contents of the editor window with tags encoded to their entities.</returns>
+		</member>
+		<member name="getText ()">
+			<summary>Used to obtain the plain text contents of the editor window as a string.</summary>
+			<code>myeditor.getText();</code>
+			<returns>String. The plain text contents of the editor window.</returns>
+		</member>
+		<member name="loadHTML (string)">
+			<summary>Loads an HTML document into the editor from a string.</summary>
+			<param name="html">The string containing the HTML to load into the editor.</param>
+			<code>myeditor.loadHTML("&lt;html&gt;&lt;body&gt;Hello World!&lt;/body&gt;&lt;html&gt;");</code>
+			<returns>Nothing</returns>
+		</member>
+		<member name="loadHTMLFile (string)">
+			<summary>Loads an HTML document into the editor from a URL.</summary>
+			<param name="path">The path to the HTML document to load.</param>
+			<returns>Nothing</returns>
+			<code>myeditor.loadHTMLFile("documents/file.htm");</code>
+			<remarks>If the file to be loaded is located on another host (or hostname) than the page containing the editor, the browsers security settings may prevent the load.</remarks>
+		</member>
+		<member name="toggleView ()">
+			<summary>Switches the editor view between WYSIWYG and mark-up mode.</summary>
+			<code>myeditor.toggleView()</code>
+		</member>
+		<member name="changeStyle (string)">
+			<summary>Changes the style of the text at the selection.</summary>
+			<param name="string">
+				<para>The style to apply. Uses standard HTML (not CSS) styles, including...</para>
+				<para>normal</para>
+				<para>bold</para>
+				<para>italic</para>
+				<para>underline</para>
+				<para>strikethrough</para>
+				<para>subscript</para>
+				<para>superscript</para>
+				<para>insertorderedlist</para>
+				<para>insertunorderedlist</para>
+				<para>indent</para>
+				<para>outdent</para>
+				<para>justifycenter</para>
+				<para>justifyfull</para>
+				<para>justifyleft</para>
+				<para>justifyright</para>
+			</param>
+			<code>myeditor.changeStyle("italic");</code>
+		</member>
+		<member name="changeFont (string)">
+			<summary>Changes the font of the text at the selection.</summary>
+			<param name="font">The font, by name, to apply.</param>
+			<code>myeditor.changeFont("Arial");</code>
+			<remarks>Since different systems may have different fonts installed, it is recommended that the external interface present only web-safe fonts as available options.</remarks>
+		</member>
+		<member name="changeSize (string)">
+			<summary>Changes the font size of the text at the selection.</summary>
+			<param name="size">The font size to apply. Sizes 1 through 5, where 1 is small and 5 is large.</param>
+			<code>myeditor.changeSize("2");</code>
+		</member>
+		<member name="changeFormat (string)">
+			<summary>Changes the paragraph format of the text at the selection.</summary>
+			<param name="format">The format to apply. Use H1 through H5.</param>
+			<code>myeditor.changeSize("2");</code>
+		</member>		
+		<member name="changeColor (string)">
+			<summary>Changes the font colour of the text at the selection.</summary>
+			<param name="colour">The HEX or name value for the colour to apply.</param>
+			<code>myeditor.changeColor("red");</code>
+		</member>
+		<member name="insertLink (string)">
+			<summary>Turns the selected text into a hyperlink to the specified path.</summary>
+			<param name="link">The path to link to.</param>
+			<code>myeditor.insertLink("http://www.google.com");</code>
+		</member>
+		<member name="insertImage (string, string, string, string)">
+			<summary>Inserts an image into the editor at the selection.</summary>
+			<param name="path">Required. The URL to the image to insert.</param>
+			<param name="width">Optional. The width to constrain the image to.</param>
+			<param name="height">Optional. The height to constrain the image to.</param>
+			<param name="align">Optional. The alignment for the image. Same as for an HTML IMG tag.</param>
+			<code>myeditor.insertImage("http://myserver/images/pic.jpg", "50", "50", "absmiddle");</code>
+		</member>
+		<member name="insertElement (object)">
+			<summary>Inserts a DOM object into the editor.</summary>
+			<param name="element">The object to insert.</param>
+			<code>
+				<c>var newspan = document.createElement("span");</c>
+				<c>newspan.innerHTML = "this is a span";</c>
+				<c>myeditor.insertElement(newspan);</c>
+			</code>
+		</member>
+	</Method>
+	<Event>
+		<member name="oncontextmenu">
+			<summary>Fires when the user right clicks in the editor to allow external code to present a contextual menu.</summary>
+			<code>myeditor.oncontextmenu = showMyMenu();</code>
+		</member>
+	</Event>
+</doc>
